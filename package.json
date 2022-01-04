@@ -2,7 +2,7 @@
   "name": "sveltekit-supabase-poc",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev",
+    "dev": "svelte-kit dev --port 8888",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
@@ -32,6 +32,7 @@
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
+    "@supabase/supabase-js": "^1.29.1",
     "cookie": "^0.4.1"
   }
 }
