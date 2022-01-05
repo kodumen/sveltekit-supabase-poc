@@ -1,38 +1,36 @@
-# create-svelte
+# sveltekit-supabase-poc
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+## Installation
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
+1. Clone repo.
+2. `cp .env.example .env`
+3. `npm install`
+4. `docker-compose up -d`
+5. `npm run dev`
+6. Go to http://localhost:3000/project/default/sql.
+7. Run the following script:
+```postgresql
+CREATE TABLE twits (
+	id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	user_id uuid NOT NULL,
+	created_at timestamptz NULL DEFAULT now(),
+	body text NOT NULL,
+	CONSTRAINT twit_pkey PRIMARY KEY (id)
+);
 ```
 
-> Note: the `@next` is temporary
+## Demos
+The following routes are available:
+1. http://localhost:8888/register
+2. http://localhost:8888/login
+3. http://localhost:8888/twit
+4. http://localhost:3000 Supabase dashboard
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
-
-```bash
-npm run build
-```
-
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+## TODO:
+1. Image upload to test Supabase Storage.
+2. Live tweet updates to test Supabase Realtime.
+3. OAuth login.
+4. Make it more presentable.
+5. Include a docker service for Svelte's dependencies to make project setup simpler.
+6. Assess the DX.
+7. Figure out how to secure the Supabase dashboard.
