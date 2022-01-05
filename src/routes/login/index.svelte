@@ -1,8 +1,7 @@
 <script lang="ts">
     import supabase from "$lib/supabase";
     import {goto} from "$app/navigation";
-
-    let errorMessage = ''
+    import {MessageLevel, push as pushNotification} from '$lib/notifications/store';
 
     async function handleSubmit(event: Event) {
         event.preventDefault();
@@ -11,13 +10,14 @@
 
         const {error} = await supabase.auth.signIn({
             email: body.get('email') as string,
-            password: body.get('password') as string
+            password: body.get('password') as string,
         });
 
         if (error) {
-            errorMessage = error.message
+            pushNotification({message: error.message, level: MessageLevel.DANGER});
         } else {
-            await goto('/')
+            pushNotification({message: 'Login successful.', level: MessageLevel.SUCCESS});
+            await goto('/');
         }
     }
 </script>
@@ -25,9 +25,6 @@
 <section>
     <form method="post" on:submit|preventDefault={handleSubmit}>
         <h1>Login</h1>
-        {#if errorMessage}
-            <div>{errorMessage}</div>
-        {/if}
         <div>
             <label for="email">Email</label>
             <input type="email" name="email" id="email" required>
