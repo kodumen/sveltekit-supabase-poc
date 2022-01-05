@@ -1,6 +1,27 @@
+<script lang="ts">
+    import supabase from "$lib/supabase";
+    import {goto} from "$app/navigation";
+    import {MessageLevel, push as pushNotification} from "$lib/notifications/store";
+
+    async function handleSubmit(event: Event) {
+        const body = new FormData(event.target as HTMLFormElement);
+
+        const {error} = await supabase.auth.signUp({
+            email: body.get('email') as string,
+            password: body.get('password') as string
+        });
+
+        if (error) {
+            pushNotification({message: error.message, level: MessageLevel.DANGER})
+        } else {
+            pushNotification({message: 'Registration successful.'})
+            await goto('/login')
+        }
+    }
+</script>
+
 <section>
-    <form method="post"
-          action="/register.json">
+    <form method="post" on:submit|preventDefault={handleSubmit}>
         <h1>Register</h1>
         <div>
             <label for="email">Email</label>

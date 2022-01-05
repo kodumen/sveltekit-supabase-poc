@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Header from '$lib/header/Header.svelte';
 	import '../app.css';
+	import NotificationList from "$lib/notifications/NotificationList.svelte";
 </script>
 
 <Header />
 
 <main>
+	<NotificationList/>
 	<slot />
 </main>
 
