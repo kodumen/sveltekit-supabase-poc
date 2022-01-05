@@ -1,5 +1,17 @@
-<script lang="ts">
+<script context="module" lang="ts">
+    import type {LoadOutput} from "@sveltejs/kit";
     import supabase from "$lib/supabase";
+
+    export async function load(): Promise<LoadOutput> {
+        if (supabase.auth.user() === null) {
+            return {status: 200};
+        }
+
+        return {status: 302, redirect: '/'};
+    }
+</script>
+
+<script lang="ts">
     import {goto} from "$app/navigation";
     import {MessageLevel, push as pushNotification} from '$lib/notifications/store';
 
