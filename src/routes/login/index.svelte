@@ -4,7 +4,7 @@
 
     let errorMessage = ''
 
-    export async function handleSubmit(event: Event): Promise<void> {
+    async function handleSubmit(event: Event) {
         event.preventDefault();
 
         const body = new FormData(event.target as HTMLFormElement);
@@ -17,7 +17,7 @@
         if (error) {
             errorMessage = error.message
         } else {
-            goto('/')
+            await goto('/')
         }
     }
 </script>
