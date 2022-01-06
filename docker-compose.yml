@@ -156,3 +156,18 @@ services:
     volumes:
       - ./docker/supabase/volumes/db/data:/var/lib/postgresql/data
       - ./docker/supabase/volumes/db/init:/docker-entrypoint-initdb.d
+
+  sveltekit:
+    container_name: sveltekit
+    image: node:16
+    user: node
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/home/node/app
+    links:
+      - kong
+    ports:
+      - ${SVELTEKIT_DEV_PORT}:3000/tcp
+    command: bash -c "npm ci && npx svelte-kit dev --host"
